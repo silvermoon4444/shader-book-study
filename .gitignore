@@ -1,0 +1,14 @@
+Assets/Textures
+Assets/Scenes
+Library/
+*.meta
+*.mat
+.DS_Store
+.vscode/
+Logs/
+Packages/
+UserSettings/
+ProjectSettings/
+Temp/
+Assembly-CSharp.csproj
+shader book study.sln
