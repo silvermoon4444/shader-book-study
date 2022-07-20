@@ -1,6 +1,6 @@
 // Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
-Shader "Custom/ch8/Alpha-blend"
+Shader "Unity Shaders Book/ch8/Alpha-blend"
 {
     Properties
     {

@@ -1,4 +1,4 @@
-Shader "Custom/ch7/ch7-NormalMapTangentSpace"
+Shader "Unity Shaders Book/ch7/ch7-NormalMapTangentSpace"
 {
     Properties
     {

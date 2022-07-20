@@ -1,6 +1,8 @@
-Shader "Unity Shaders Book/ch7/ch7-textFragSpc-blinn"
+// Upgrade NOTE: replaced '_LightMatrix0' with 'unity_WorldToLight'
+
+Shader "Custom/test"
 {
-    Properties
+       Properties
     {
         _Color ("Color", Color) = (1,1,1,1)
         _MainTex ("Texture2D", 2D) = "white" {}
@@ -15,6 +17,7 @@ Shader "Unity Shaders Book/ch7/ch7-textFragSpc-blinn"
             #pragma fragment frag
 
             #include "Lighting.cginc"
+            #pragma multi_compile_fwbase
 
             fixed4 _Color;
             sampler2D _MainTex;
@@ -45,21 +48,13 @@ Shader "Unity Shaders Book/ch7/ch7-textFragSpc-blinn"
 
             fixed4 frag(v2f o):SV_TARGET{ 
                 fixed3 normWorld =normalize(o.normWorld);
-                // fixed3 lightPos=normalize(_WorldSpaceLightPos0.xyz);
-                fixed3 texColor=tex2D(_MainTex,o.uv).rgb*_Color.rgb;
+                float3 lightCoord = mul(unity_WorldToLight, float4(o.pos, 1)).xyz;
 
-                fixed3 lightPos=normalize(UnityWorldSpaceLightDir(o.posWorld));
-                fixed3 diffuse=_LightColor0.rgb*texColor*saturate(dot(normWorld,lightPos));
-                
-                fixed3 eyePos=normalize(UnityWorldSpaceViewDir(o.posWorld));
-                fixed3 halfDir =normalize(lightPos+eyePos);
-                fixed3 specular=_LightColor0.rgb*_Specular.rgb* pow(saturate(dot(normWorld,halfDir)),_Gloss);
+                fixed3 color=fixed3(1,1,1);
+                float3 lightCoord = mul(unity_WorldToLight, float4(lightCoord, 1)).xyz;
+                fixed atten = tex2D(_LightTexture0, dot(lightCoord, lightCoord).rr).UNITY_ATTEN_CHANNEL;
 
-                fixed3 ambient=UNITY_LIGHTMODEL_AMBIENT.xyz*texColor;
-
-                // fixed3 color=ambient+diffuse+specular;
-                fixed3 color=texColor;
-                return fixed4(color,1);
+                return fixed4(1,0,0,1);
             }
 
 
